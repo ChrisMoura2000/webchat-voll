@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon-whatsApp.png" type="image/ico" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Webchat Voll</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="nickname" placeholder="nickname">
+        <button type="button" id="btn-save">Salvar</button>
+    </div>
+    <section id="app">
+        <div>
+            <h3>Active users</h3>
+            <ul v-for="user in users">{{ user }}</ul>
+        </div>
+        <div>
+            <h3>Chat</h3>
+            <p v-for="message in messages">
+                {{ message.msg }}
+            </p>
+            <span v-for="message in messages">
+                {{ message.time }}
+            </span>
+        </div>
+    </section>
+    <div>
+        <input type="text" placeholder="Type a message">
+        <button type="button" id="btn-send">Enviar</button>
+    </div>
+    
+</body>
+<script src="index.js"></script>
+</html>
