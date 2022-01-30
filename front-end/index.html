@@ -16,15 +16,15 @@
     <section id="app">
         <div>
             <h3>Active users</h3>
-            <ul v-for="user in onlineUsers">{{ user }}</ul>
+            <ul v-for="user in onlineUsers">{{ user.name }}</ul>
         </div>
-        <div>
-            <h3>Chat</h3>
-            <p v-for="message in messages">
-                {{ message.msg }}
+        <h3>Chat</h3>
+        <div v-for="message in messages">
+            <p>
+                {{ message.message }}
             </p>
-            <span v-for="message in messages">
-                {{ message.time }}
+            <span>
+                {{ message.nickname }} {{ message.timestamp }}
             </span>
         </div>
     </section>

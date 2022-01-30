@@ -1,6 +1,6 @@
 const connection = require("./connection");
 
-const saveMessage = async (message, nickname, timestamp) => {
+const saveMessage = async (message, nickname, time) => {
   const messagesCollection = await connection().then((db) =>
     db.collection("messages")
   );
@@ -8,7 +8,7 @@ const saveMessage = async (message, nickname, timestamp) => {
   const responseDB = await messagesCollection.insertOne({
     message,
     nickname,
-    timestamp,
+    time,
   });
   console.log(responseDB);
 };
@@ -19,7 +19,6 @@ const getSomeMessages = async () => {
   );
 
   const response = await messagesCollection.find().limit(30).toArray();
-  console.log(response);
   return response;
 };
 
