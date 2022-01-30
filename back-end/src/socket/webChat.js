@@ -17,6 +17,14 @@ const webChat = (io) => {
             onlineUsers.unshift({ id, name: newNick })
             io.emit('updateOnlineUsers', onlineUsers)
         })
+
+        socket.on('disconnect', () => {
+            const newUsersOnline = onlineUsers.filter((user) => socket.id !== user.id)
+
+            onlineUsers = newUsersOnline;
+
+            io.emit('updateOnlineUsers', onlineUsers)
+        })
     })
 }
 

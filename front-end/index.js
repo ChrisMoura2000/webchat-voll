@@ -22,16 +22,10 @@ function loadOldMessages() {
 loadOldMessages();
 
 socket.on("updateOnlineUsers", (users) => {
-  app.onlineUsers = [];
-
   const currentUser = users.find((user) => socket.id === user.id);
   const otherUsers = users.filter((user) => socket.id !== user.id);
-
   otherUsers.unshift(currentUser);
-
   app.onlineUsers = otherUsers;
-
-    // app.onlineUsers = users;
 });
 
 const btnSave = document.querySelector("#btn-save");
