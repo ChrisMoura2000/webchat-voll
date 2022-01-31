@@ -14,7 +14,6 @@ function loadOldMessages() {
   fetch(URL_API)
     .then((promise) => promise.json())
     .then((result) => {
-      console.log(result);
       app.messages = result.messages;
     });
 }
@@ -31,10 +30,44 @@ socket.on("updateOnlineUsers", (users) => {
 const btnSave = document.querySelector("#btn-save");
 const inputNick = document.querySelector("#nickname");
 
+const btnSend = document.querySelector("#btn-send")
+const inputMsg = document.querySelector("#input-mgs");
+
 function saveNewNick() {
   const newNick = inputNick.value;
+  if (!newNick) {
+    return alert('Digite seu nome')
+  }
   socket.emit('updateNick', { newNick, id: socket.id})
   inputNick.value = ''
 }
 
+function sendMessage() {
+  const textMsg = inputMsg.value
+  if (!textMsg) {
+    return alert('Escreva algo')
+  }
+  const user = app.onlineUsers.find(({ id }) => {
+    return socket.id === id
+  })
+
+  socket.emit('message', { message: textMsg, nickname: user.name })
+  inputMsg.value = ''
+}
+
+socket.on('message', (payload) => {
+  if (app.onlineUsers[0].name === payload.nickname) {
+    payload.itsMe = true
+  }
+  console.log(payload);
+  console.log(app);
+  app.messages.push(payload)
+})
+
 btnSave.addEventListener("click", saveNewNick);
+btnSend.addEventListener("click", sendMessage);
+document.addEventListener("keypress", (e) => {
+  if (e.key === 'Enter') {
+    btnSend.click()
+  }
+});

@@ -10,7 +10,6 @@ const saveMessage = async (message, nickname, time) => {
     nickname,
     time,
   });
-  console.log(responseDB);
 };
 
 const getSomeMessages = async () => {

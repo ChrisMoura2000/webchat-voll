@@ -1,3 +1,6 @@
+const moment = require('moment')
+const { saveMessage } = require('../models/messages')
+
 let onlineUsers = [];
 const webChat = (io) => {
     io.on('connection', (socket) => {
@@ -8,7 +11,6 @@ const webChat = (io) => {
         }
         
         onlineUsers.push(newUser)
-        
         io.emit('updateOnlineUsers', onlineUsers)
 
         socket.on('updateNick', ({newNick, id}) => {
@@ -20,10 +22,14 @@ const webChat = (io) => {
 
         socket.on('disconnect', () => {
             const newUsersOnline = onlineUsers.filter((user) => socket.id !== user.id)
-
             onlineUsers = newUsersOnline;
-
             io.emit('updateOnlineUsers', onlineUsers)
+        })
+
+        socket.on('message', ({ message, nickname }) => {
+            const time = moment().format('h:mm a')
+            saveMessage(message, nickname, time)
+            io.emit('message', { message, nickname, time })
         })
     })
 }
