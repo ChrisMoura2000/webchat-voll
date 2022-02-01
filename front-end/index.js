@@ -56,11 +56,10 @@ function sendMessage() {
 }
 
 socket.on('message', (payload) => {
-  if (app.onlineUsers[0].name === payload.nickname) {
+  if (socket.id === payload.id) {
     payload.itsMe = true
+    delete payload.nickname
   }
-  console.log(payload);
-  console.log(app);
   app.messages.push(payload)
 })
 

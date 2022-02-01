@@ -13,6 +13,8 @@ body {
 .chat {
     border: 2px solid black;
     width: 70%;
+    overflow: auto;
+    height: 85vh;
 }
 
 .app {

@@ -29,7 +29,7 @@ const webChat = (io) => {
         socket.on('message', ({ message, nickname }) => {
             const time = moment().format('h:mm a')
             saveMessage(message, nickname, time)
-            io.emit('message', { message, nickname, time })
+            io.emit('message', { message, nickname, time, id: socket.id })
         })
     })
 }
